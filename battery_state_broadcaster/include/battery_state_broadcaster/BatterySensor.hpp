@@ -33,47 +33,25 @@ public:
     for (const auto& state_interface : state_interfaces_)
     {
       const auto& name = state_interface.get().get_interface_name();
-      if (const auto& data = state_interface.get().get_optional(1); data != std::nullopt) {
-          if (name == "voltage")
-          {
-            message.voltage = data.value();
-          }
-          else if (name == "temperature")
-          {
-            message.temperature = data.value();
-          }
-          else if (name == "charge")
-          {
-            message.charge = data.value();
-          }
-          else if (name == "current")
-          {
-            message.current = data.value();
-          }
-          else if (name == "capacity")
-          {
-            message.capacity = data.value();
-          }
-          else if (name == "percentage")
-          {
-            message.percentage = data.value();
-          }
-          else if (name == "power_supply_health")
-          {
-            message.power_supply_health =
-                static_cast<uint8_t>(std::round(data.value()));
-          }
-          else if (name == "power_supply_status")
-          {
-            message.power_supply_status =
-                static_cast<uint8_t>(std::round(data.value()));
-          }
-          else if (name == "present")
-          {
-            message.present =
-                static_cast<int>(
-                    std::round(data.value())) == 0 ? false : true;
-          }
+      const auto& value = state_interface.get().get_value();
+      if (name == "voltage") {
+        message.voltage = value;
+      } else if (name == "temperature") {
+        message.temperature = value;
+      } else if (name == "charge") {
+        message.charge = value;
+      } else if (name == "current") {
+        message.current = value;
+      } else if (name == "capacity") {
+        message.capacity = value;
+      } else if (name == "percentage") {
+        message.percentage = value;
+      } else if (name == "power_supply_health") {
+        message.power_supply_health = static_cast<uint8_t>(std::round(value));
+      } else if (name == "power_supply_status") {
+        message.power_supply_status = static_cast<uint8_t>(std::round(value));
+      } else if (name == "present") {
+        message.present = static_cast<int>(std::round(value)) == 0 ? false : true;
       }
     }
   }
